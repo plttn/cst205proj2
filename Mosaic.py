@@ -5,6 +5,8 @@ keyFile = open('key.txt', 'r')
 
 APIkey = keyFile.read()
 
+print APIkey
+
 myImage = Image.open("davidTennant.jpg")
 myImage.load()
 width = 500
@@ -18,6 +20,6 @@ numOfTilesVert = height / tileWidth
 numOfTilesHoriz = width / tileWidth
 print numOfTiles
 
-tile[10][10]
-for y in range(10)
-    for x in range(10)
+#tile[10][10]
+#for y in range(10)
+#    for x in range(10)
