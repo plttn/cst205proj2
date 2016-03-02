@@ -1,5 +1,10 @@
 from PIL import Image
 
+#import key from untracked file
+keyFile = open('key.txt', 'r')
+
+APIkey = keyFile.read()
+
 myImage = Image.open("davidTennant.jpg")
 myImage.load()
 width = 500
@@ -16,4 +21,3 @@ print numOfTiles
 tile[10][10]
 for y in range(10)
     for x in range(10)
-
