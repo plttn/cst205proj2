@@ -35,7 +35,7 @@ numOfTilesVert = height / tileWidth
 numOfTilesHoriz = width / tileWidth
 
 # create two dimensional array to hold crop images
-tiledImage = [[for row in xrange(numOfTilesHoriz)]:for x in range(numOfTilesVert)]
+tiledImage = [numOfTilesHoriz][numOfTilesVert]
 
 # for loop that crops a copy of the image to 50 * 50
 for y in range(0,numOfTilesVert):
