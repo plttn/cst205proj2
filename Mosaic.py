@@ -3,7 +3,7 @@ from PIL import Image, ImageDraw
 #import key from untracked file
 keyFile = open('key.txt', 'r')
 
-APIkey = keyFile.read()
+APIkey = keyFile.readline().strip()
 
 print APIkey
 
