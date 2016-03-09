@@ -35,16 +35,19 @@ numOfTilesVert = height / tileWidth
 numOfTilesHoriz = width / tileWidth
 
 # create two dimensional array to hold crop images
-tiledImage = [numOfTilesHoriz][numOfTilesVert]
+tiledImage = {}
 
 # for loop that crops a copy of the image to 50 * 50
 for y in range(0,numOfTilesVert):
-    tiledImage.append([])
     for x in range (0,numOfTilesHoriz):
         cropImage = myImage.crop(((x*50),(y*50),((x+1) * 50),((y+ 1) * 50)))
-        tiledImage[x][y].append(cropImage)
+        tiledImage[x,y] = cropImage
 
-tiledImage[0][0].show()
-tiledImage[numOfTilesHoriz-2][numOfTilesVert-2].show()
+exampleImage = tiledImage[1,0]
+
+exampleImage.show()
+
+#tiledImage[0,0].show()
+# tiledImage[numOfTilesHoriz-2][numOfTilesVert].show()
 
 #comment
