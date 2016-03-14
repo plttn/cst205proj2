@@ -1,15 +1,24 @@
 import requests
+import re
+
 
 #import key from untracked file
 keyFile = open('key.txt', 'r')
-
 APIkey = keyFile.readline().strip()
 
+def SearchFlickr( tag ):
+	APIendpoint = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + APIkey + '&tags=' + tag
+	searchResults = requests.get(APIendpoint)
 
-APIendpoint = 'https://api.flickr.com/services/rest/?method=flickr.test.echo&api_key=' + APIkey + '&tags=fairies'
+	ids     = re.findall(r'id=\"(.+?)\"', searchResults.text)
+	secrets = re.findall(r'secret=\"(.+?)\"', searchResults.text)
+	farms   = re.findall(r'farm=\"(.+?)\"', searchResults.text)
+	servers = re.findall(r'server=\"(.+?)\"', searchResults.text)
 
-print APIendpoint
+	photoURLs = []
 
-searchPictures = requests.get(APIendpoint)
+	for i, c, f, r in zip(ids, secrets, farms, servers):
+		photoURLs.append('https://farm' + f + '.staticflickr.com/' + r + '/' + i + '_' + c +'.jpg')
 
-print searchPictures.text
+	for url in photoURLs:
+		print url
