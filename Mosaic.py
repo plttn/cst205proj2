@@ -1,18 +1,30 @@
 from PIL import Image, ImageDraw
 
 #import key from untracked file
-keyFile = open('key.txt', 'r')
+#keyFile = open('key.txt', 'r')
 
-APIkey = keyFile.readline().strip()
+#APIkey = keyFile.readline().strip()
 
-print APIkey
+#print APIkey
+#pixels = myImage.load()
+def average_image_color(myImage):
+    
+#get width & height of image sent in
+    width,height = myImage.size
+    r_avg =0
+    g_avg=0
+    b_avg=0
+    for x in range(0, width):
+        for y in range(0, height):
+            r,g,b =myImage.getpixel((x,y))
+            r_avg =(r+r_avg)/2
+            g_avg=(g+g_avg)/2
+            b_avg=(b+b_avg)/2
+    return (r_avg, g_avg, b_avg)
 
-myImage = Image.open("davidTennant.jpg")
-myImage.load()
-
-#get width & height of main image
+#creates image
+myImage = Image.open("cookieCat.png")
 width,height = myImage.size
-
 # function rounds pictures height & width to scale of 50
 def roundImage(x, base = 50):
     return int(base * round(float(x)/base))
@@ -25,29 +37,8 @@ height = roundImage(height)
 #resized main image by scale of 50
 myImage = myImage.resize((width, height), Image.ANTIALIAS)
 
-myImage.show()
-
 tileWidth = 50
 
-#gets the number of tiles vertically
-numOfTilesVert = height / tileWidth
-#gets the number of tiles horizontally
-numOfTilesHoriz = width / tileWidth
+average_color = average_image_color(myImage)
 
-# create two dimensional array to hold crop images
-tiledImage = {}
-
-# for loop that crops a copy of the image to 50 * 50
-for y in range(0,numOfTilesVert):
-    for x in range (0,numOfTilesHoriz):
-        cropImage = myImage.crop(((x*50),(y*50),((x+1) * 50),((y+ 1) * 50)))
-        tiledImage[x,y] = cropImage
-
-exampleImage = tiledImage[1,0]
-
-exampleImage.show()
-
-#tiledImage[0,0].show()
-# tiledImage[numOfTilesHoriz-2][numOfTilesVert].show()
-
-#comment
+print(average_color) 
