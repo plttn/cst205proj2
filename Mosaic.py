@@ -1,14 +1,24 @@
 from PIL import Image, ImageDraw
-
-#import key from untracked file
-keyFile = open('key.txt', 'r')
-
-APIkey = keyFile.readline().strip()
-
-print APIkey
+from flickrAPI import image_process as flickr
+import os
 
 myImage = Image.open("davidTennant.jpg")
 myImage.load()
+
+tag = "flowers" #hardcoded flag for just now (possibly user requested list of tags)
+
+
+flickr(tag) #generates 1-99 in tiles/$tag directory
+
+
+#build tag list
+tagList = []
+
+tagPath = os.path.join ("tiles", tag)
+
+for x in range(1,101):
+    filePath = os.path.join(tagPath, str(x).zfill(2) + ".png")
+    tagList.append(filePath)
 
 #get width & height of main image
 width,height = myImage.size
@@ -27,6 +37,9 @@ myImage = myImage.resize((width, height), Image.ANTIALIAS)
 
 myImage.show()
 
+tileImage = Image.open(tagList[50])
+tileImage.show()
+
 tileWidth = 50
 
 #gets the number of tiles vertically
@@ -43,9 +56,9 @@ for y in range(0,numOfTilesVert):
         cropImage = myImage.crop(((x*50),(y*50),((x+1) * 50),((y+ 1) * 50)))
         tiledImage[x,y] = cropImage
 
-exampleImage = tiledImage[1,0]
+#exampleImage = tiledImage[1,0]
 
-exampleImage.show()
+#exampleImage.show()
 
 #tiledImage[0,0].show()
 # tiledImage[numOfTilesHoriz-2][numOfTilesVert].show()

@@ -31,9 +31,10 @@ def image_process( tag ):
 
 	increment = 1
 	for url in photoURLs:
+		print "getting picture " + str(increment)
 		r = requests.get(url)
 		image = Image.open(StringIO(r.content))
-		path = os.path.join(dirName, str(increment)) + ".png"
+		path = os.path.join(dirName, str(increment).zfill(2)) + ".png"
 		image = image.resize((25,25))
 		image.save(path, "PNG")
 		increment += 1
