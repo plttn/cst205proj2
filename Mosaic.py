@@ -1,6 +1,7 @@
 from PIL import Image, ImageDraw
 from flickrAPI import image_process as flickr
 import os
+from tint import image_tint
 
 myImage = Image.open("davidTennant.jpg")
 myImage.load()
@@ -35,7 +36,6 @@ height = roundImage(height)
 #resized main image by scale of 50
 myImage = myImage.resize((width, height), Image.ANTIALIAS)
 
-myImage.show()
 
 tileImage = Image.open(tagList[50])
 tileImage.show()
