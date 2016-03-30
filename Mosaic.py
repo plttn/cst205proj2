@@ -31,7 +31,7 @@ myImage = Image.open("cookieCat.png")
 
 tag = "flowers" #hardcoded flag for just now (possibly user requested list of tags)
 
-flickr(tag) #generates 1-99 in tiles/$tag directory
+#flickr(tag) #generates 1-99 in tiles/$tag directory
 
 #build tag list
 tagList = []
@@ -76,12 +76,20 @@ for y in range(0,numOfTilesVert):
         cropImage = myImage.crop(((x*50),(y*50),((x+1) * 50),((y+ 1) * 50)))
         tiledImage[x,y] = cropImage
 
-averageColorMatrix = {}
+averageTileColors = {}
+
 
 for y in range(0, numOfTilesVert):
     for x in range(0, numOfTilesHoriz):
-        averageColor = average_color(tiledImage[x,y]) #gets the average color of the tile
-        averageColorMatrix[x,y] = averageColor
+        averageColor = average_image_color(tiledImage[x,y]) #gets the average color of the tile
+        averageTileColors[x,y] = averageColor #stores it in the matrix
 
+# calculate mosaic averages
+averageMosaicColors = []
+for j in range(0, len(tagList)):
+    currentImage = Image.open(tagList[j])
+    averageMosaicColors.append(average_image_color(currentImage))
+
+print(averageMosaicColors[0])
 #prints the average color value
 print(average_color)
