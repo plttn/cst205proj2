@@ -90,6 +90,32 @@ for j in range(0, len(tagList)):
     currentImage = Image.open(tagList[j])
     averageMosaicColors.append(average_image_color(currentImage))
 
+
+def margin_of_error(value1, value2):
+    difference = value1-value2
+    difference = difference / value1
+
+    difference = difference * 100
+    return difference
+    pass
+
+
+for y in range(0, numOfTilesVert):
+    for x in range(0, numOfTilesHoriz):
+        checkColor = averageTileColors[x, y]
+        closestMargin = (10, 10, 10)
+        for z in range(0, len(tagList)):
+            currentTileColor = averageMosaicColors[z]
+            currentMargin = (margin_of_error(checkColor[0], averageMosaicColors[0]), margin_of_error(checkColor[1], averageMosaicColors[1]), margin_of_error(checkColor[2], averageMosaicColors[2]))
+            if (currentMargin[0] < 5 and currentMargin[1] < 5 and currentMargin[2] < 5): #this is within 5 percent of the original
+                if currentMargin[0] < closestMargin[1] and currentMargin[1] < closestMargin[1] and currentMargin[2] < closestMargin[2]:
+                    pass
+                currentTileWinner = z;
+
+
+
+
+
 print(averageMosaicColors[0])
 #prints the average color value
 print(average_color)
