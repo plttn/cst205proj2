@@ -36,9 +36,11 @@ height = roundImage(height)
 #resized main image by scale of 50
 myImage = myImage.resize((width, height), Image.ANTIALIAS)
 
+tintedImage = image_tint(myImage,'#123456')
+
 
 tileImage = Image.open(tagList[50])
-tileImage.show()
+tintedImage.show()
 
 tileWidth = 50
 
