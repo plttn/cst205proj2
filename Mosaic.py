@@ -79,13 +79,13 @@ for y in range(0,numOfTilesVert):
 averageTileColors = {}
 
 
-for y in range(0, numOfTilesVert):
+for y in range(0, numOfTilesVert): #this is the user provided image
     for x in range(0, numOfTilesHoriz):
         averageColor = average_image_color(tiledImage[x,y]) #gets the average color of the tile
         averageTileColors[x,y] = averageColor #stores it in the matrix
 
 # calculate mosaic averages
-averageMosaicColors = []
+averageMosaicColors = [] # these are the downloaded pictures
 for j in range(0, len(tagList)):
     currentImage = Image.open(tagList[j])
     averageMosaicColors.append(average_image_color(currentImage))
