@@ -2,6 +2,7 @@ from PIL import Image, ImageDraw
 from flickrAPI import image_process as flickr
 import os
 from tint import image_tint
+import pprint
 
 #import key from untracked file
 #keyFile = open('key.txt', 'r')
@@ -14,20 +15,22 @@ def average_image_color(myImage):
     r_avg =0
     g_avg=0
     b_avg=0
-#goes through checking the rgb values in the image demensions and finding average
-    for x in range(0, width):
-        for y in range(0, height):
+    #goes through checking the rgb values in the image demensions and finding average
+    for y in range(0, height):
+        for x in range(0, width):
             r,g,b =myImage.getpixel((x,y))
 
             #gets the average of the rgb values
-            r_avg =(r+r_avg)/2
-            g_avg=(g+g_avg)/2
-            b_avg=(b+b_avg)/2
-    #returns the average
+            r_avg =(r+r_avg)
+            g_avg =(g+g_avg)
+            b_avg =(b+b_avg)
+#returns the average
+
+    print r_avg, g_avg, b_avg
     return (r_avg, g_avg, b_avg)
 
 #main image
-myImage = Image.open("cookieCat.png")
+myImage = Image.open("test.png")
 
 tag = "flowers" #hardcoded flag for just now (possibly user requested list of tags)
 
@@ -57,10 +60,8 @@ height = roundImage(height)
 #resized main image by scale of 50
 myImage = myImage.resize((width, height), Image.ANTIALIAS)
 
-#sends  the image to average_color
-average_color = average_image_color(myImage)
 
-tileWidth = 50
+tileWidth = 25
 
 #gets the number of tiles vertically
 numOfTilesVert = height / tileWidth
@@ -92,30 +93,38 @@ for j in range(0, len(tagList)):
 
 
 def margin_of_error(value1, value2):
+    if value1 == 0 or value2 == 0:
+        return 0
+
     difference = value1-value2
     difference = difference / value1
-
     difference = difference * 100
     return difference
     pass
 
 
+mosaicImageMatrix = {}
+
 for y in range(0, numOfTilesVert):
     for x in range(0, numOfTilesHoriz):
         checkColor = averageTileColors[x, y]
-        closestMargin = (10, 10, 10)
+        closestMargin = [10, 10, 10]
         for z in range(0, len(tagList)):
             currentTileColor = averageMosaicColors[z]
-            currentMargin = (margin_of_error(checkColor[0], averageMosaicColors[0]), margin_of_error(checkColor[1], averageMosaicColors[1]), margin_of_error(checkColor[2], averageMosaicColors[2]))
+            currentMargin = (margin_of_error(checkColor[0], averageMosaicColors[z][0]), margin_of_error(checkColor[1], averageMosaicColors[z][1]), margin_of_error(checkColor[2], averageMosaicColors[z][2]))
             if (currentMargin[0] < 5 and currentMargin[1] < 5 and currentMargin[2] < 5): #this is within 5 percent of the original
                 if currentMargin[0] < closestMargin[1] and currentMargin[1] < closestMargin[1] and currentMargin[2] < closestMargin[2]:
-                    pass
-                currentTileWinner = z;
+                    currentTileWinner = z;
+                    closestMargin[0] = currentMargin[0]
+                    closestMargin[1] = currentMargin[1]
+                    closestMargin[2] = currentMargin[2]
+        if closestMargin == [10, 10 ,10]:
+            abc = 1    #we didn't find a close match, tint a tile instead
+        else:
+            currentTileWinner = z + 1;
+            mosaicImageMatrix[x, y] = currentTileWinner; #store tile index in position it needs to be in matrix
 
 
-
-
-
-print(averageMosaicColors[0])
+#pprint.pprint(mosaicImageMatrix)
 #prints the average color value
-print(average_color)
+#print(average_color)
