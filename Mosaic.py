@@ -24,13 +24,12 @@ def average_image_color(myImage):
             r_avg =(r+r_avg)
             g_avg =(g+g_avg)
             b_avg =(b+b_avg)
-#returns the average
-
-    print r_avg, g_avg, b_avg
-    return (r_avg, g_avg, b_avg)
+    total = height * width
+    #returns the average
+    return (r_avg/total, g_avg/total, b_avg/total)
 
 #main image
-myImage = Image.open("test.png")
+myImage = Image.open("davidTennant.jpg")
 
 tag = "flowers" #hardcoded flag for just now (possibly user requested list of tags)
 
@@ -107,6 +106,7 @@ mosaicImageMatrix = {}
 
 for y in range(0, numOfTilesVert):
     for x in range(0, numOfTilesHoriz):
+        print "checking tile: ", x, y
         checkColor = averageTileColors[x, y]
         closestMargin = [10, 10, 10]
         for z in range(0, len(tagList)):
@@ -118,6 +118,7 @@ for y in range(0, numOfTilesVert):
                     closestMargin[0] = currentMargin[0]
                     closestMargin[1] = currentMargin[1]
                     closestMargin[2] = currentMargin[2]
+                    print "found a new tile winner ", z
         if closestMargin == [10, 10 ,10]:
             abc = 1    #we didn't find a close match, tint a tile instead
         else:
