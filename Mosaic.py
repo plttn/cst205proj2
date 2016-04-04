@@ -33,7 +33,7 @@ myImage = Image.open("davidTennant.jpg")
 
 tag = "flowers" #hardcoded flag for just now (possibly user requested list of tags)
 
-#flickr(tag) #generates 1-99 in tiles/$tag directory
+flickr(tag) #generates 1-99 in tiles/$tag directory
 
 #build tag list
 tagList = []
@@ -108,6 +108,7 @@ for y in range(0, numOfTilesVert):
     for x in range(0, numOfTilesHoriz):
         print "checking tile: ", x, y
         checkColor = averageTileColors[x, y]
+        print "average color: ", checkColor
         closestMargin = [10, 10, 10]
         for z in range(0, len(tagList)):
             currentTileColor = averageMosaicColors[z]
